@@ -1,0 +1,9 @@
+<form id="buy-ticket" action="/flights/<%= flight._id %>/tickets" method="POST" >
+  <td>
+    <input name="seat" required pattern="[A-F][1-9]\d?" placeholder="Add Seat">
+  </td>
+  <td>
+    <input name="price" type="number" placeholder="Add Price">
+  </td>
+  <input type="submit" value="Add Ticket">
+</form>

@@ -1,4 +1,5 @@
 const Flight = require('../models/flight');
+const Ticket = require('../models/ticket');
 const Validation = require('../globals/validation');
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
   addArrival,
 }
 
+/* Display 'All Flights' */
 async function index(req, res) {
   try {
     const flights = await Flight.find({});
@@ -21,6 +23,7 @@ async function index(req, res) {
   }
 }
 
+/* Display 'Add Flight' page */
 function newFlight(req, res) {
   res.render('flights/new', {
     title: 'New Flight',
@@ -31,6 +34,28 @@ function newFlight(req, res) {
   })
 }
 
+/* Display the Details page and loads info from both the ticket and the flights database */
+async function show(req, res){
+  try{
+    console.log('checkpoint 1')
+    console.log('FLight ID: ',req.params.id)
+    const flight = await Flight.findById(req.params.id)
+    console.log('checkpoint 2')
+    const tickets = await Ticket.find({ flight: flight._id })
+    console.log('checkpoint 3');
+    res.render('flights/details', {
+      title: 'Flight Details', 
+      flight,
+      tickets,
+      airports: Validation.airportList,
+    });
+ } catch (err) {
+  console.log('error')
+    res.redirect('/flights')
+  };
+}
+
+/* Create a new flight, input in Add Flight page */
 async function create(req, res){
   try {
     if (req.body.departs === '') {
@@ -46,20 +71,7 @@ async function create(req, res){
 }
 
 
-async function show(req, res){
-  try{
-    const flight = await Flight.findById(req.params.id);
-    res.render('flights/details', {
-      title: 'Flight Details', 
-      flight,
-      airports: Validation.airportList,
-    });
-    console.log(flight);
-  } catch (err) {
-    res.redirect('/flights')
-  }
-}
-
+/* Add Arrival Entry Creation functionality in Detail page*/
 async function addArrival(req, res){
   try {
     await Flight.create(req.body);
@@ -72,3 +84,4 @@ async function addArrival(req, res){
 }
 
 console.log('Controllers flight.js working fine!')
+

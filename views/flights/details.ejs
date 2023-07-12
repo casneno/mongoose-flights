@@ -33,4 +33,40 @@
     </label><br>
   </form>
   <% } %>
+
+<!-- Add Ticket -->
+<table id="ticket-list">
+  <thead>
+    <tr>
+      <th>Seat</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tickets.forEach(function(ticket) { %>
+    <tr>
+      <td><%= ticket.seat %></td>
+      <td>€<%= ticket.price %></td>
+    </tr>
+    <% }); %>
+    <tr>
+<!--       <form id="buy-ticket" action="/flights/<%= flight._id %>/tickets" method="POST" >
+      <td>
+        <input name="seat" required pattern="[A-F][1-9]\d?" placeholder="Add Seat">
+      </td>
+      <td>
+        <input name="price" type="number" placeholder="Add Price">
+      </td>
+      <input type="submit" value="Add Ticket">
+    </form>
+    </tr> -->
+    <a href="/flights/<%= flight._id %>/tickets">Add Ticket</a>
+  </tbody>
+</table>
+
+
+
+
+
+
 <%- include('../partials/footer')%>
