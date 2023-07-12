@@ -1,0 +1,36 @@
+<%- include('../partials/header')%>
+<h1><%= title %></h1>
+
+<!-- Flight Details -->
+<section id="detail-page">
+  <div>Airline: <%= flight.airline %></div>
+  <div>Airport: <%= flight.airport %></div>
+  <div>Flight Number: <%= flight.flightNo %></div>
+  <div>Departure: <%= flight.departs %></div>
+  <% if(flight.destination.length) {%>
+    <div>Destination: <%= flight.destination[0].airport %></div>
+    <div>Arrival Date: <%= flight.destination[0].arrival %></div>
+    <% } else { %>
+      <h5>Pending destination details</h5>
+    <% } %>
+</section>
+
+<!-- Add Arrival info -->
+<% if(flight.destination.length) {%>
+  <h5>Flight details are complete</h5>
+  <% } else { %>
+  <form action="/flights/<%=flight._id%>/arrivals" method="POST">
+    <button type="submit">Add Arrival Info</button>
+    <label>Arrival: 
+      <input type="datetime-local" name="arrival">
+    </label>
+    <label>Arrival Airport:
+      <select name="airport">
+        <% for (let i = 0; i < airports.length; i++) { %>
+          <option value="<%= airports[i] %>"><%= airports[i] %></option>
+        <% } %>
+      </select>
+    </label><br>
+  </form>
+  <% } %>
+<%- include('../partials/footer')%>

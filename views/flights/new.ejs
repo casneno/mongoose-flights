@@ -1,0 +1,34 @@
+<%- include('../partials/header')%>
+
+<h1><%= title %></h1>
+<h2>Enter New Flight Details</h2>
+<form action="/flights" method="POST"> 
+
+  <label>Airline:
+    <select name="airline">
+      <% for (let i = 0; i < airlines.length; i++) { %>
+        <option value="<%= airlines[i] %>"><%= airlines[i] %></option>
+      <% } %>
+    </select>
+  </label><br>
+  <label>Airport:
+    <select name="airport">
+      <% for (let i = 0; i < airports.length; i++) { %>
+        <option value="<%= airports[i] %>"><%= airports[i] %></option>
+      <% } %>
+    </select>
+  </label><br>
+
+  <label>Flight #:
+    <input type="number" name="flightNo">
+  </label><br>
+
+  <label>Departs on:
+    <input type="datetime-local" name="departs">
+  </label><br>
+
+  <button type="submit">Add Flight</button>
+  
+</form>
+
+<%- include('../partials/footer')%>
